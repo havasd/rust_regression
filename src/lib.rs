@@ -1,16 +1,18 @@
-use std::ops::{AddAssign, Sub};
-
 pub fn p1(input: &str) -> i64 {
-    input.lines().fold(0, |acc, line| {
-        predict_next_value(parse_line_into_sequence_of_numbers(line))
-            + acc
-    })
+    input
+        .lines()
+        .map(parse_line_into_sequence_of_numbers)
+        .map(predict_next_value)
+        .sum::<i64>()
 }
 
 pub fn p2(input: &str) -> i64 {
-    input.lines().fold(0, |acc, line| {
-        predict_next_value(parse_line_into_sequence_of_numbers(line).rev()) + acc
-    })
+    input
+        .lines()
+        .map(parse_line_into_sequence_of_numbers)
+        .rev()
+        .map(predict_next_value)
+        .sum::<i64>()
 }
 
 fn parse_line_into_sequence_of_numbers(
@@ -21,19 +23,15 @@ fn parse_line_into_sequence_of_numbers(
     })
 }
 
-fn predict_next_value<T>(numbers: impl Iterator<Item = T>) -> T
-where
-    T: Copy + Sub<Output = T> + PartialEq + Default + AddAssign,
-{
+fn predict_next_value(numbers: impl Iterator<Item = i64>) -> i64 {
     let mut sequence = numbers.collect::<Vec<_>>();
 
-    let mut result = T::default();
-    while sequence.iter().any(|v| *v != T::default()) {
+    // Although it looks like a fold, it is faster imperative
+    let mut result = 0;
+    while sequence.iter().any(|&v| v != 0) {
         result += *sequence.last().unwrap();
 
-        if let Some(differences) =
-            generate_differences_and_values(sequence.into_iter())
-        {
+        if let Some(differences) = generate_differences(sequence) {
             sequence = differences.collect();
         } else {
             break;
@@ -42,14 +40,12 @@ where
     result
 }
 
-fn generate_differences_and_values<T>(
-    mut sequence: impl Iterator<Item = T>,
-) -> Option<impl Iterator<Item = T>>
-where
-    T: Copy + Sub<Output = T>,
-{
-    sequence.next().map(|v1| {
-        sequence.scan(v1, |acc, v| {
+fn generate_differences(
+    sequence: Vec<i64>,
+) -> Option<impl Iterator<Item = i64>> {
+    let mut sequence = sequence.into_iter();
+    sequence.next().map(|firstvalue| {
+        sequence.scan(firstvalue, |acc, v| {
             let difference = v - *acc;
             *acc = v;
             Some(difference)
@@ -62,8 +58,8 @@ mod tests {
     use std::{fs::File, io::Read};
 
     use crate::{
-        generate_differences_and_values, p1,
-        parse_line_into_sequence_of_numbers, predict_next_value,
+        generate_differences, p1, parse_line_into_sequence_of_numbers,
+        predict_next_value,
     };
 
     #[test]
@@ -103,8 +99,7 @@ mod tests {
         let input = parse_line_into_sequence_of_numbers("7 15 32 57 98 176 332 653 1352 2972 6842 16010 37046 83402 181521 381725 777249 1536841 2959392 5563435 10230470")
             .collect::<Vec<_>>();
         let len = input.len();
-        if let Some(result) = generate_differences_and_values(input.into_iter())
-        {
+        if let Some(result) = generate_differences(input) {
             let result = result.collect::<Vec<_>>();
             assert_eq!(result.len(), len - 1);
         } else {

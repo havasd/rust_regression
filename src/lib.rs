@@ -2,31 +2,46 @@ use std::ops::Sub;
 
 pub fn p1(input: &str) -> i64 {
     input.lines().fold(0, |acc, line| {
-        predict_next_value(&mut parse_line_into_sequence_of_numbers(line)) + acc
+        predict_next_value(
+            &mut parse_line_into_sequence_of_numbers(line),
+            false,
+        ) + acc
     })
 }
 
-pub fn p2(input: &str) -> u64 {
-    todo!("p2")
-}
+pub fn p2(input: &str) -> i64 {
+    input.lines().fold(0, |acc, line| {
+        predict_next_value(
+            &mut parse_line_into_sequence_of_numbers(line),
+            true,
+        ) + acc
+    })}
 
 fn parse_line_into_sequence_of_numbers(
     line: &str,
-) -> impl Iterator<Item = i64> + '_ {
+) -> impl DoubleEndedIterator<Item = i64> + '_ {
     line.split_whitespace().map(|number_string| {
         number_string.parse::<i64>().expect("parse error in line")
     })
 }
 
-fn predict_next_value<T>(numbers: &mut impl Iterator<Item = T>) -> T
+fn predict_next_value<T, I>(
+    numbers: &mut  I,
+    first: bool,
+) -> T
 where
     T: Copy + Sub<Output = T> + PartialEq + Default + std::iter::Sum,
+    I: Iterator<Item = T> + DoubleEndedIterator
 {
-    let mut sequence = numbers.collect::<Vec<_>>();
-    let mut stack_of_lastvalues = Vec::new();
+    let mut sequence = if first {
+        numbers.rev().collect::<Vec<_>>()
+    } else {
+        numbers.collect::<Vec<_>>()
+    };
+    let mut stack_of_values = Vec::new();
     while sequence.iter().any(|v| *v != T::default()) {
-        let lastvalue = *sequence.last().unwrap();
-        stack_of_lastvalues.push(lastvalue);
+        let value = *sequence.last().unwrap();
+        stack_of_values.push(value);
         if let Some(differences) =
             generate_differences_and_values(sequence.into_iter())
         {
@@ -35,7 +50,7 @@ where
             break;
         }
     }
-    stack_of_lastvalues.into_iter().sum()
+    stack_of_values.into_iter().sum()
 }
 
 fn generate_differences_and_values<T>(
@@ -66,6 +81,7 @@ mod tests {
     fn test_predict_next_value() {
         let result = predict_next_value(
             &mut parse_line_into_sequence_of_numbers("1 3 6 10 15 21"),
+            false
         );
         assert_eq!(result, 28);
     }
@@ -74,14 +90,25 @@ mod tests {
     fn test_predict_next_value2() {
         let result = predict_next_value(
             &mut parse_line_into_sequence_of_numbers("10 13 16 21 30 45"),
+            false
         );
         assert_eq!(result, 68);
+    }
+
+    #[test]
+    fn test_predict_next_value4() {
+        let result = predict_next_value(
+            &mut parse_line_into_sequence_of_numbers("10 13 16 21 30 45"),
+            true
+        );
+        assert_eq!(result, 5);
     }
 
     #[test]
     fn test_predict_next_value3() {
         let result = predict_next_value(
             &mut parse_line_into_sequence_of_numbers("0 3 6 9 12 15"),
+            false
         );
         assert_eq!(result, 18);
     }

@@ -1,4 +1,4 @@
-use std::ops::Sub;
+use std::ops::{AddAssign, Sub};
 
 pub fn p1(input: &str) -> i64 {
     input.lines().fold(0, |acc, line| {
@@ -30,7 +30,7 @@ fn predict_next_value<T, I>(
     first: bool,
 ) -> T
 where
-    T: Copy + Sub<Output = T> + PartialEq + Default + std::iter::Sum,
+    T: Copy + Sub<Output = T> + PartialEq + Default + AddAssign,
     I: Iterator<Item = T> + DoubleEndedIterator
 {
     let mut sequence = if first {
@@ -38,10 +38,11 @@ where
     } else {
         numbers.collect::<Vec<_>>()
     };
-    let mut stack_of_values = Vec::new();
+   
+   let mut result = T::default();
     while sequence.iter().any(|v| *v != T::default()) {
-        let value = *sequence.last().unwrap();
-        stack_of_values.push(value);
+        result += *sequence.last().unwrap();
+
         if let Some(differences) =
             generate_differences_and_values(sequence.into_iter())
         {
@@ -50,7 +51,7 @@ where
             break;
         }
     }
-    stack_of_values.into_iter().sum()
+   result
 }
 
 fn generate_differences_and_values<T>(

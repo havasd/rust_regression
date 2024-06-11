@@ -1,19 +1,30 @@
 use std::ops::Sub;
 
 pub fn p1(input: &str) -> i64 {
-    let mut result = 0;
-    for line in input.lines() {
-        let numbers =
-            parse_line_into_sequence_of_numbers(line).collect::<Vec<_>>();
-        result += predict_next_value(numbers);
-    }
-    result
+    input.lines().fold(0, |acc, line| {
+        predict_next_value(&mut parse_line_into_sequence_of_numbers(line)) + acc
+    })
 }
 
-fn predict_next_value(numbers: Vec<i64>) -> i64 {
-    let mut sequence = numbers;
+pub fn p2(input: &str) -> u64 {
+    todo!("p2")
+}
+
+fn parse_line_into_sequence_of_numbers(
+    line: &str,
+) -> impl Iterator<Item = i64> + '_ {
+    line.split_whitespace().map(|number_string| {
+        number_string.parse::<i64>().expect("parse error in line")
+    })
+}
+
+fn predict_next_value<T>(numbers: &mut impl Iterator<Item = T>) -> T
+where
+    T: Copy + Sub<Output = T> + PartialEq + Default + std::iter::Sum,
+{
+    let mut sequence = numbers.collect::<Vec<_>>();
     let mut stack_of_lastvalues = Vec::new();
-    while sequence.iter().any(|v| *v != 0) {
+    while sequence.iter().any(|v| *v != T::default()) {
         let lastvalue = *sequence.last().unwrap();
         stack_of_lastvalues.push(lastvalue);
         if let Some(differences) =
@@ -27,22 +38,12 @@ fn predict_next_value(numbers: Vec<i64>) -> i64 {
     stack_of_lastvalues.into_iter().sum()
 }
 
-#[allow(unused_variables)]
-pub fn p2(input: &str) -> u64 {
-    todo!("p2")
-}
-
-fn parse_line_into_sequence_of_numbers(
-    line: &str,
-) -> impl Iterator<Item = i64> + '_ {
-    line.split_whitespace().map(|number_string| {
-        number_string.parse::<i64>().expect("parse error in line")
-    })
-}
-
-fn generate_differences_and_values<T: Copy + Sub<Output = T>>(
+fn generate_differences_and_values<T>(
     mut sequence: impl Iterator<Item = T>,
-) -> Option<impl Iterator<Item = T>> {
+) -> Option<impl Iterator<Item = T>>
+where
+    T: Copy + Sub<Output = T>,
+{
     sequence.next().map(|v1| {
         sequence.scan(v1, |acc, v| {
             let difference = v - *acc;
@@ -63,25 +64,25 @@ mod tests {
 
     #[test]
     fn test_predict_next_value() {
-        let input =
-            parse_line_into_sequence_of_numbers("1 3 6 10 15 21").collect();
-        let result = predict_next_value(input);
+        let result = predict_next_value(
+            &mut parse_line_into_sequence_of_numbers("1 3 6 10 15 21"),
+        );
         assert_eq!(result, 28);
     }
 
     #[test]
     fn test_predict_next_value2() {
-        let input =
-            parse_line_into_sequence_of_numbers("10 13 16 21 30 45").collect();
-        let result = predict_next_value(input);
+        let result = predict_next_value(
+            &mut parse_line_into_sequence_of_numbers("10 13 16 21 30 45"),
+        );
         assert_eq!(result, 68);
     }
 
     #[test]
     fn test_predict_next_value3() {
-        let input =
-            parse_line_into_sequence_of_numbers("0 3 6 9 12 15").collect();
-        let result = predict_next_value(input);
+        let result = predict_next_value(
+            &mut parse_line_into_sequence_of_numbers("0 3 6 9 12 15"),
+        );
         assert_eq!(result, 18);
     }
 
@@ -93,7 +94,6 @@ mod tests {
         if let Some(result) = generate_differences_and_values(input.into_iter())
         {
             let result = result.collect::<Vec<_>>();
-            println!("{:?}", result);
             assert_eq!(result.len(), len - 1);
         } else {
             assert!(false)

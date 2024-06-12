@@ -1,3 +1,5 @@
+pub mod swift;
+
 use std::mem::replace;
 
 pub fn p1(input: &str) -> i64 {
@@ -12,7 +14,7 @@ pub fn p2(input: &str) -> i64 {
     input
         .lines()
         .map(parse_line_into_sequence_of_numbers)
-        .rev()
+        .map(|v| v.rev())
         .map(predict_next_value)
         .sum::<i64>()
 }
@@ -59,8 +61,7 @@ mod tests {
     use std::{fs::File, io::Read};
 
     use crate::{
-        generate_differences, p1, parse_line_into_sequence_of_numbers,
-        predict_next_value,
+        generate_differences, p1, p2, parse_line_into_sequence_of_numbers, predict_next_value
     };
 
     #[test]
@@ -114,11 +115,29 @@ mod tests {
     }
 
     #[test]
+    fn test_p2_sample() {
+        let input = "0 3 6 9 12 15
+1 3 6 10 15 21
+10 13 16 21 30 45";
+        let result = p2(input);
+        assert_eq!(result, 2);
+    }
+
+    #[test]
     fn test_p1_real() {
         let mut f = File::open("input.txt").expect("can't open file");
         let mut buf = String::new();
         f.read_to_string(&mut buf).expect("can't read file");
         let result = p1(&buf);
         assert_eq!(result, 2043677056);
+    }
+
+    #[test]
+    fn test_p2_real() {
+        let mut f = File::open("input.txt").expect("can't open file");
+        let mut buf = String::new();
+        f.read_to_string(&mut buf).expect("can't read file");
+        let result = p2(&buf);
+        assert_eq!(result, 1062);
     }
 }

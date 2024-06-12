@@ -21,7 +21,13 @@ fn parse_line_into_sequence_of_numbers(
     line: &str,
 ) -> impl DoubleEndedIterator<Item = i64> + '_ {
     line.split_whitespace().map(|number_string| {
-        number_string.parse::<i64>().expect("parse error in line")
+        match number_string.parse::<i64>() {
+            Ok(v) => v,
+            Err(e) => {
+                // any broken number may cause the algorithm to loop endlessly
+                panic!("parse int error in item {number_string}, error {e}");
+            }
+        }
     })
 }
 
@@ -31,7 +37,7 @@ fn predict_next_value(numbers: impl DoubleEndedIterator<Item = i64>) -> i64 {
     // Although it looks like a fold, it is faster imperative
     let mut result = 0;
     while sequence.iter().any(|&v| v != 0) {
-        result += *sequence.first().unwrap();
+        result += *sequence.first().unwrap(); // safe as sequence can't be empty here
         sequence = generate_differences(sequence);
     }
     result
@@ -40,9 +46,7 @@ fn predict_next_value(numbers: impl DoubleEndedIterator<Item = i64>) -> i64 {
 fn generate_differences(sequence: Vec<i64>) -> Vec<i64> {
     let mut sequence = sequence.into_iter();
     if let Some(result) = sequence.next().map(|firstvalue| {
-        sequence.scan(firstvalue, |acc, v| {
-            Some(replace(acc, v) - v)
-        })
+        sequence.scan(firstvalue, |acc, v| Some(replace(acc, v) - v))
     }) {
         Vec::from_iter(result)
     } else {

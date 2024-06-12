@@ -1,3 +1,5 @@
+use std::mem::replace;
+
 pub fn p1(input: &str) -> i64 {
     input
         .lines()
@@ -23,34 +25,29 @@ fn parse_line_into_sequence_of_numbers(
     })
 }
 
-fn predict_next_value(numbers: impl Iterator<Item = i64>) -> i64 {
-    let mut sequence = numbers.collect::<Vec<_>>();
+fn predict_next_value(numbers: impl DoubleEndedIterator<Item = i64>) -> i64 {
+    let mut sequence = numbers.rev().collect::<Vec<_>>();
 
     // Although it looks like a fold, it is faster imperative
     let mut result = 0;
     while sequence.iter().any(|&v| v != 0) {
-        result += *sequence.last().unwrap();
-
-        if let Some(differences) = generate_differences(sequence) {
-            sequence = differences.collect();
-        } else {
-            break;
-        }
+        result += *sequence.first().unwrap();
+        sequence = generate_differences(sequence);
     }
     result
 }
 
-fn generate_differences(
-    sequence: Vec<i64>,
-) -> Option<impl Iterator<Item = i64>> {
+fn generate_differences(sequence: Vec<i64>) -> Vec<i64> {
     let mut sequence = sequence.into_iter();
-    sequence.next().map(|firstvalue| {
+    if let Some(result) = sequence.next().map(|firstvalue| {
         sequence.scan(firstvalue, |acc, v| {
-            let difference = v - *acc;
-            *acc = v;
-            Some(difference)
+            Some(replace(acc, v) - v)
         })
-    })
+    }) {
+        Vec::from_iter(result)
+    } else {
+        vec![]
+    }
 }
 
 #[cfg(test)]
@@ -99,12 +96,8 @@ mod tests {
         let input = parse_line_into_sequence_of_numbers("7 15 32 57 98 176 332 653 1352 2972 6842 16010 37046 83402 181521 381725 777249 1536841 2959392 5563435 10230470")
             .collect::<Vec<_>>();
         let len = input.len();
-        if let Some(result) = generate_differences(input) {
-            let result = result.collect::<Vec<_>>();
-            assert_eq!(result.len(), len - 1);
-        } else {
-            assert!(false)
-        }
+        let result = generate_differences(input);
+        assert_eq!(result.len(), len - 1);
     }
 
     #[test]

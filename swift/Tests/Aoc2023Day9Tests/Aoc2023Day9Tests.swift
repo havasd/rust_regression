@@ -23,7 +23,25 @@ final class Aoc2023Day9Tests: XCTestCase {
     let result = day9p2(input: input)
     XCTAssertEqual(result, 2)
   }
-  
+
+  func testDay9p1Measure() {
+    let file = "../input.txt"
+    let input = try? String(contentsOfFile: file, encoding: .utf8)
+    measure {
+      let result = day9p1(input: input!)
+      XCTAssertEqual(result, 2_043_677_056)
+    }
+  }
+
+  func testDay9p2Measure() {
+    let file = "../input.txt"
+    let input = try? String(contentsOfFile: file, encoding: .utf8)
+    measure {
+      let result = day9p2(input: input!)
+      XCTAssertEqual(result, 1062)
+    }
+  }
+
   static var allTests = [
     ("testDay9p1Sample", testDay9p1Sample, testDay9p2Sample)
   ]

@@ -12,30 +12,20 @@ public func day9p1(input: String) -> Int64 {
   return result
 }
 
-@_cdecl("day9p1ForRust")
-public func day9p1ForRust(_ input: SRString) -> Int64 {
-  let result = day9p1(input: input.toString())
-  return result
-}
-
 public func day9p2(input: String) -> Int64 {
-  let result  = input.split(separator: "\n")
+  let result = input.split(separator: "\n")
     .map(parseLineIntoSequenceOfNumbers)
     .map {
       $0.reversed()
     }
-    .map(predictNextValue)    
+    .map(predictNextValue)
     .reduce(0) { (result, value) in
       result + value
     }
 
   return result
 }
-@_cdecl("day9p2ForRust")
-public func day9p2ForRust(_ input: SRString) -> Int64 {
-  let result = day9p2(input: input.toString())
-  return result
-}
+
 func parseLineIntoSequenceOfNumbers(line: Substring) -> [Int64] {
   return line.split(separator: " ").map { Int64($0)! }
 }
@@ -49,6 +39,19 @@ extension [Int64] {
       }
     }
     return false
+  }
+}
+
+extension ArraySlice {
+  func scan<Result>(_ initialResult: Result, _ nextPartialResult: (inout Result, Element) -> Result)
+    -> [Result]
+  {
+    var result: [Result] = []
+    var acc = initialResult
+    for element in self {
+      result.append(nextPartialResult(&acc, element))
+    }
+    return result
   }
 }
 
@@ -68,10 +71,12 @@ func predictNextValue(sequence: [Int64]) -> Int64 {
 }
 
 func generateDifferences(sequence: [Int64]) -> [Int64] {
-  var result = [Int64]()
-
-  for i in 0..<sequence.count - 1 {
-    result.append(sequence[i + 1] - sequence[i])
+  let firstvalue = sequence.first!
+  let result = sequence[1..<sequence.count].scan(firstvalue) { (previous, current) in
+    defer {
+      previous = current
+    }
+    return current - previous
   }
 
   return result

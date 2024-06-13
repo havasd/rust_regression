@@ -1,11 +1,8 @@
-use std::{
-    fs::File,
-    io::Read,
-};
+use std::{fs::File, io::Read};
 
-use day9::{p1, p2};
-use day9::swift::day9p1ForRust;
-use day9::swift::day9p2ForRust;
+use day9::rust::{p1, p2};
+use day9::swift::day9p1_rust_bridge;
+use day9::swift::day9p2_rust_bridge;
 use swift_rs::{self, SRString};
 
 fn main() {
@@ -16,9 +13,8 @@ fn main() {
     println!("{result}");
     let result = p2(&buf);
     println!("{result}");
-    let result = unsafe {day9p1ForRust(SRString::from(buf.as_str()))};
+    let result = unsafe { day9p1_rust_bridge(SRString::from(buf.as_str())) };
     println!("{result}");
-    let result = unsafe {day9p2ForRust(SRString::from(buf.as_str()))};
+    let result = unsafe { day9p2_rust_bridge(SRString::from(buf.as_str())) };
     println!("{result}");
 }
-

@@ -1,8 +1,6 @@
-import Foundation
-import SwiftRs
-
 public func day9p1(input: String) -> Int64 {
   let result = input.split(separator: "\n")
+    .lazy
     .map(parseLineIntoSequenceOfNumbers)
     .map(predictNextValue)
     .reduce(0) { (result, value) in
@@ -14,6 +12,7 @@ public func day9p1(input: String) -> Int64 {
 
 public func day9p2(input: String) -> Int64 {
   let result = input.split(separator: "\n")
+    .lazy
     .map(parseLineIntoSequenceOfNumbers)
     .map {
       $0.reversed()
@@ -28,31 +27,6 @@ public func day9p2(input: String) -> Int64 {
 
 func parseLineIntoSequenceOfNumbers(line: Substring) -> [Int64] {
   return line.split(separator: " ").map { Int64($0)! }
-}
-
-// This should be in the standard library, generic for any collection type.
-extension [Int64] {
-  func anySatisfy(_ predicate: (Int64) -> Bool) -> Bool {
-    for element in self {
-      if predicate(element) {
-        return true
-      }
-    }
-    return false
-  }
-}
-
-extension ArraySlice {
-  func scan<Result>(_ initialResult: Result, _ nextPartialResult: (inout Result, Element) -> Result)
-    -> [Result]
-  {
-    var result: [Result] = []
-    var acc = initialResult
-    for element in self {
-      result.append(nextPartialResult(&acc, element))
-    }
-    return result
-  }
 }
 
 func predictNextValue(sequence: [Int64]) -> Int64 {
@@ -78,6 +52,5 @@ func generateDifferences(sequence: [Int64]) -> [Int64] {
     }
     return current - previous
   }
-
   return result
 }

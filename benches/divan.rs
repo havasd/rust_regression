@@ -1,6 +1,6 @@
 use day9::{
-    p1, p2,
-    swift::{day9p1ForRust, day9p2ForRust},
+    rust::{p1, p2},
+    swift::{day9p1_rust_bridge, day9p2_rust_bridge},
 };
 use swift_rs::{self, SRString};
 
@@ -22,7 +22,7 @@ fn part2() {
 #[divan::bench]
 fn part1_swift() {
     unsafe {
-        day9p1ForRust(divan::black_box(SRString::from(include_str!(
+        day9p1_rust_bridge(divan::black_box(SRString::from(include_str!(
             "../input.txt",
         ))));
     }
@@ -31,7 +31,8 @@ fn part1_swift() {
 #[divan::bench]
 fn part2_swift() {
     unsafe {
-        day9p2ForRust(divan::black_box(SRString::from(include_str!(
+        day9p2_rust_bridge(divan::black_box(SRString::from(include_str!(
             "../input.txt",
         ))));
-    }}
+    }
+}

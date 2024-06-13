@@ -1,7 +1,5 @@
-#![allow(non_snake_case)]
-
 use swift_rs::{swift, SRString};
 
-swift!(pub fn day9p1ForRust(s: SRString) -> i64);
+swift!(pub fn day9p1_rust_bridge(s: SRString) -> i64);
 
-swift!(pub fn day9p2ForRust(s: SRString) -> i64);
+swift!(pub fn day9p2_rust_bridge(s: SRString) -> i64);

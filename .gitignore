@@ -1,6 +1,7 @@
-/target
+target
 .DS_Store
 swift/default.profraw
 swift/.swiftpm/
-
-
+RustDay9/
+generated/
+.build/

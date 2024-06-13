@@ -26,7 +26,9 @@ final class Aoc2023Day9Tests: XCTestCase {
 
   func testDay9p1Measure() {
     let file = "../input.txt"
-    let input = try? String(contentsOfFile: file, encoding: .utf8)
+    let input = try? String(
+      contentsOfFile: file,
+      encoding: .utf8)
     measure {
       let result = day9p1(input: input!)
       XCTAssertEqual(result, 2_043_677_056)
@@ -35,7 +37,9 @@ final class Aoc2023Day9Tests: XCTestCase {
 
   func testDay9p2Measure() {
     let file = "../input.txt"
-    let input = try? String(contentsOfFile: file, encoding: .utf8)
+    let input = try? String(
+      contentsOfFile: file,
+      encoding: .utf8)
     measure {
       let result = day9p2(input: input!)
       XCTAssertEqual(result, 1062)

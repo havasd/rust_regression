@@ -10,7 +10,10 @@ extension Sequence {
   }
 
   func scan<State, Result>(
-    _ initialResult: State, _ nextPartialResult: (inout State, Element) -> Result
+    _ initialResult: State,
+    _ nextPartialResult: (
+      inout State, Element
+    ) -> Result
   )
     -> [Result]
   {

@@ -4,3 +4,7 @@ Using solutions of Advent of Code 2023 day 9, this rep gives an example of
 how to use SwiftRs to use Swift packages with Rust.
 
 Benchmarks are discouraging for Swift though...
+
+## Caveats
+
+This works on macOS only, as SwiftRs is not available on Linux.

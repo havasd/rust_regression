@@ -1,5 +1,13 @@
 use std::mem::replace;
 
+#[swift_bridge::bridge]
+mod rust {
+    extern "Rust" {
+        pub fn p1(input: &str) -> i64;
+        pub fn p2(input: &str) -> i64;
+    }
+}
+
 pub fn p1(input: &str) -> i64 {
     input
         .lines()

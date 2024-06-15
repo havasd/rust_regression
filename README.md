@@ -20,8 +20,8 @@ To build the package *DayRust9*, do this
 
 ```
 cargo clean
-cargo build --release
-swift-bridge-cli create-package --bridges-dir day9_rust/generated --name Day9Rust --out-dir Day9Rust --macos $(find target/release -name "libday9_rust-*.a")
+cargo build -p day9_rust --release
+swift-bridge-cli create-package --bridges-dir day9_rust/generated --name Day9Rust --out-dir Day9Rust --macos target/release/libday9_rust.a
 ```
 Now the Swift package in day9_rust can be build and tests run on the swift and rust functions by
 ```

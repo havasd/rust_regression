@@ -23,18 +23,18 @@ cargo clean
 cargo build -p day9_rust --release
 swift-bridge-cli create-package --bridges-dir day9_rust/generated --name Day9Rust --out-dir Day9Rust --macos target/release/libday9_rust.a
 ```
-Now the Swift package in day9_rust can be build and tests run on the swift and rust functions by
+Now you can build the Swift package in day9_swift and run its tests, which include the Rust functions.
 ```
 cd day9_swift
 swift build -c release
 swift test
 ```
 
-The test output may be more concise using *xcbeautify*. This is available from Homebrew
+The test output is more concise using *xcbeautify*. This is available from Homebrew
 ```
 brew install xcbeautify
 ```
-and then run the tests with
+Run the tests with
 ```
 swift test | xcbeautify
 ```

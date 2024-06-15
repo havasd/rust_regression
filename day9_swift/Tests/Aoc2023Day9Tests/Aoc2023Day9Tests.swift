@@ -29,14 +29,22 @@ final class Aoc2023Day9Tests: XCTestCase {
     let input = try? String(
       contentsOfFile: file,
       encoding: .utf8)
+    #if os(macOS)
       let options = XCTMeasureOptions()
       options.iterationCount = 100
-      measure (
+      measure(
         metrics: [XCTCPUMetric(), XCTMemoryMetric()],
-        options: options) {
-      let result = day9p1(input: input!)
-      XCTAssertEqual(result, 2_043_677_056)
-    }
+        options: options
+      ) {
+        let result = day9p1(input: input!)
+        XCTAssertEqual(result, 2_043_677_056)
+      }
+    #else
+      measure {
+        let result = day9p1(input: input!)
+        XCTAssertEqual(result, 2_043_677_056)
+      }
+    #endif
   }
 
   func testDay9p2Measure() {
@@ -44,14 +52,22 @@ final class Aoc2023Day9Tests: XCTestCase {
     let input = try? String(
       contentsOfFile: file,
       encoding: .utf8)
+    #if os(macOS)
       let options = XCTMeasureOptions()
       options.iterationCount = 100
-      measure (
+      measure(
         metrics: [XCTCPUMetric(), XCTMemoryMetric()],
-        options: options) {
-      let result = day9p2(input: input!)
-      XCTAssertEqual(result, 1062)
-    }
+        options: options
+      ) {
+        let result = day9p2(input: input!)
+        XCTAssertEqual(result, 1062)
+      }
+    #else
+      measure {
+        let result = day9p2(input: input!)
+        XCTAssertEqual(result, 1062)
+      }
+    #endif
   }
 
   static var allTests = [

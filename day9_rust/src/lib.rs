@@ -58,10 +58,7 @@ fn generate_differences(sequence: Vec<i64>) -> Vec<i64> {
 mod tests {
     use std::{fs::File, io::Read};
 
-    use crate::rust::{
-        generate_differences, p1, p2, parse_line_into_sequence_of_numbers,
-        predict_next_value,
-    };
+    use super::*;
 
     #[test]
     fn test_predict_next_value() {
@@ -124,7 +121,7 @@ mod tests {
 
     #[test]
     fn test_p1_real() {
-        let mut f = File::open("input.txt").expect("can't open file");
+        let mut f = File::open("../input.txt").expect("can't open file");
         let mut buf = String::new();
         f.read_to_string(&mut buf).expect("can't read file");
         let result = p1(&buf);
@@ -133,7 +130,7 @@ mod tests {
 
     #[test]
     fn test_p2_real() {
-        let mut f = File::open("input.txt").expect("can't open file");
+        let mut f = File::open("../input.txt").expect("can't open file");
         let mut buf = String::new();
         f.read_to_string(&mut buf).expect("can't read file");
         let result = p2(&buf);

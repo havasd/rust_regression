@@ -1,8 +1,10 @@
 use std::{fs::File, io::Read};
 
-use day9::rust::{p1, p2};
-use day9::swift::day9p1_rust_bridge;
-use day9::swift::day9p2_rust_bridge;
+use day9_rust::p1;
+use day9_rust::p2;
+#[cfg(target_os = "macos")]
+use day9::swift::{day9p1_rust_bridge, day9p2_rust_bridge};
+#[cfg(target_os = "macos")]
 use swift_rs::{self, SRString};
 
 fn main() {
@@ -13,8 +15,10 @@ fn main() {
     println!("{result}");
     let result = p2(&buf);
     println!("{result}");
-    let result = unsafe { day9p1_rust_bridge(SRString::from(buf.as_str())) };
-    println!("{result}");
-    let result = unsafe { day9p2_rust_bridge(SRString::from(buf.as_str())) };
-    println!("{result}");
+    if cfg!(target_os = "macos") {
+        let result = unsafe { day9p1_rust_bridge(SRString::from(buf.as_str())) };
+        println!("{result}");
+        let result = unsafe { day9p2_rust_bridge(SRString::from(buf.as_str())) };
+        println!("{result}");
+    }
 }

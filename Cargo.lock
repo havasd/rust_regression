@@ -190,9 +190,14 @@ name = "day9"
 version = "0.1.0"
 dependencies = [
  "criterion",
+ "day9_rust",
  "divan",
  "swift-rs",
 ]
+
+[[package]]
+name = "day9_rust"
+version = "0.1.0"
 
 [[package]]
 name = "divan"

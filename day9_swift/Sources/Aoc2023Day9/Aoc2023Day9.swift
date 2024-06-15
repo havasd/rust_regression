@@ -1,6 +1,5 @@
 public func day9p1(input: String) -> Int64 {
   let result = input.split(separator: "\n")
-    .lazy
     .map(parseLineIntoSequenceOfNumbers)
     .map(predictNextValue)
     .reduce(0) { (result, value) in
@@ -12,7 +11,6 @@ public func day9p1(input: String) -> Int64 {
 
 public func day9p2(input: String) -> Int64 {
   let result = input.split(separator: "\n")
-    .lazy
     .map(parseLineIntoSequenceOfNumbers)
     .map {
       $0.reversed()
@@ -25,11 +23,11 @@ public func day9p2(input: String) -> Int64 {
   return result
 }
 
-func parseLineIntoSequenceOfNumbers(line: Substring) -> [Int64] {
+@inline(__always) func parseLineIntoSequenceOfNumbers(line: Substring) -> [Int64] {
   return line.split(separator: " ").map { Int64($0)! }
 }
 
-func predictNextValue(sequence: [Int64]) -> Int64 {
+@inline(__always) func predictNextValue(sequence: [Int64]) -> Int64 {
   var result: Int64 = 0
   // This makes sequence mutable, but as we never write to it
   // but just replace it, copy-on-write should not be a problem.
@@ -44,7 +42,7 @@ func predictNextValue(sequence: [Int64]) -> Int64 {
   return result
 }
 
-func generateDifferences(sequence: [Int64]) -> [Int64] {
+@inline(__always) func generateDifferences(sequence: [Int64]) -> [Int64] {
   let firstvalue = sequence.first!
   let result = sequence[1..<sequence.count].scan(firstvalue) {
     (previous, current) in

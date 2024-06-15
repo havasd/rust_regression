@@ -1,0 +1,28 @@
+{
+    "configurations": [
+        {
+            "type": "lldb",
+            "request": "launch",
+            "sourceLanguages": [
+                "swift"
+            ],
+            "args": [],
+            "cwd": "${workspaceFolder:day9}/day9_swift",
+            "name": "Debug Aoc2023Day9Executable (day9_swift)",
+            "program": "${workspaceFolder:day9}/day9_swift/.build/debug/Aoc2023Day9Executable",
+            "preLaunchTask": "swift: Build Debug Aoc2023Day9Executable (day9_swift)"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "sourceLanguages": [
+                "swift"
+            ],
+            "args": [],
+            "cwd": "${workspaceFolder:day9}/day9_swift",
+            "name": "Release Aoc2023Day9Executable (day9_swift)",
+            "program": "${workspaceFolder:day9}/day9_swift/.build/release/Aoc2023Day9Executable",
+            "preLaunchTask": "swift: Build Release Aoc2023Day9Executable (day9_swift)"
+        }
+    ]
+}

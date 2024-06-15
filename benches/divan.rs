@@ -1,7 +1,5 @@
-use day9::{
-    rust::{p1, p2},
-    swift::{day9p1_rust_bridge, day9p2_rust_bridge},
-};
+use day9::swift::{day9p1_rust_bridge, day9p2_rust_bridge};
+use day9_rust::{p1, p2};
 use swift_rs::{self, SRString};
 
 fn main() {

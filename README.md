@@ -7,4 +7,4 @@ Benchmarks are discouraging for Swift though...
 
 ## Caveats
 
-This works on macOS only, as SwiftRs is not available on Linux.
+The swift part is included  on macOS only, as SwiftRs is not available on Linux.

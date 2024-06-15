@@ -1,4 +1,4 @@
-# Rust/Swift interop with SwiftRs
+# Rust/Swift interop with SwiftRs/Swift-Bridge
 
 Using solutions of Advent of Code 2023 day 9, this rep gives an example of
 how to use SwiftRs to use Swift packages with Rust.

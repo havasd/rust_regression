@@ -12,7 +12,7 @@ The swift part is included  on macOS only, as SwiftRs is not available on Linux.
 ## Building the Swift package of rust functions
 *This is on macOS only*
 
-As a pre-requisite you need the swift-bridge-cli commmand for cargo. This is installed by
+As a pre-requisite you need the *swift-bridge-cli* commmand for cargo. This is installed by
 ```
 cargo install swift-bridge-cli
 ```
@@ -28,4 +28,13 @@ Now the Swift package in day9_rust can be build and tests run on the swift and r
 cd day9_swift
 swift build -c release
 swift test
+```
+
+The test output may be more concise using *xcbeautify*. This is available from Homebrew
+```
+brew install xcbeautify
+```
+and then run the tests with
+```
+swift test | xcbeautify
 ```

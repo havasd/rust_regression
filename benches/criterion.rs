@@ -116,10 +116,7 @@ criterion_group!(
 criterion_group!(
     benches,
     bench_p1,
-    bench_p2,
-    bench_p1_swift,
-    bench_p2_swift,
-    bench_p1_swift2,
+    bench_p2
 );
 
 criterion_main!(benches);

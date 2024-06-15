@@ -2,10 +2,7 @@ use std::{fs::File, io::Read};
 
 use day9_rust::p1;
 use day9_rust::p2;
-#[cfg(target_os = "macos")]
-use day9::swift::{day9p1_rust_bridge, day9p2_rust_bridge};
-#[cfg(target_os = "macos")]
-use swift_rs::{self, SRString};
+
 
 fn main() {
     let mut f = File::open("input.txt").expect("can't open file");
@@ -16,9 +13,23 @@ fn main() {
     let result = p2(&buf);
     println!("{result}");
     if cfg!(target_os = "macos") {
-        let result = unsafe { day9p1_rust_bridge(SRString::from(buf.as_str())) };
+        swift::call_swift(&buf);
+    }
+}
+
+#[cfg(target_os = "macos")]
+mod swift {
+    use day9::swift::{day9p1_rust_bridge, day9p2_rust_bridge};
+    use swift_rs::{self, SRString};
+    pub fn call_swift(buf: &str) {
+        let result = unsafe { day9p1_rust_bridge(SRString::from(buf)) };
         println!("{result}");
-        let result = unsafe { day9p2_rust_bridge(SRString::from(buf.as_str())) };
+        let result = unsafe { day9p2_rust_bridge(SRString::from(buf)) };
         println!("{result}");
     }
+    
+}
+#[cfg(not(target_os = "macos"))]
+mod swift {
+    pub fn call_swift(_buf: &str) {}
 }

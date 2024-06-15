@@ -10,7 +10,7 @@ Benchmarks are discouraging for Swift though...
 The swift part is included  on macOS only, as SwiftRs is not available on Linux.
 
 ## Building the Swift package of rust functions
-*This is on macOS only*
+### macOS
 
 As a pre-requisite you need the *swift-bridge-cli* commmand for cargo. This is installed by
 ```
@@ -38,3 +38,20 @@ Run the tests with
 ```
 swift test | xcbeautify
 ```
+
+### Linux
+
+On Linux, swift-bridge isn't available, so the package in day9_swift can't import the rust functions.
+To build and run the tests of this package you need to create a dummy Day9Rust package 
+in the root directory:
+
+```
+mkdir Day9Rust
+cd Day9Rust
+swift package init --type library 
+```
+
+Then go to day9_swift, build and run the tests as usual in a swift package.
+
+You need Swift on Linux of course, Grab the 5.10 or newer tarball from swift.org,
+unpack it anywhere and put it's bin directory in your path.

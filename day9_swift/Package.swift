@@ -35,6 +35,9 @@ let package = Package(
       dependencies: ["Aoc2023Day9"]),
     .testTarget(
       name: "Aoc2023Day9Tests",
-      dependencies: ["Aoc2023Day9", "Day9Rust"]),
+      dependencies: [
+        "Aoc2023Day9",
+        .product(name: "Day9Rust",  package: "Day9Rust", condition: .when(platforms: [.macOS])),
+      ]),
   ]
 )

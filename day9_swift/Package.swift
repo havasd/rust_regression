@@ -28,7 +28,7 @@ let package = Package(
     .target(
       name: "Aoc2023Day9",
       dependencies: [
-        .product(name: "SwiftRs", package: "swift-rs")
+        .product(name: "SwiftRs", package: "swift-rs", condition: .when(platforms: [.macOS]))
       ]),
     .executableTarget(
       name: "Aoc2023Day9Executable",

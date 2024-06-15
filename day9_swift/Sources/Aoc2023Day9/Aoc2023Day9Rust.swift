@@ -1,4 +1,5 @@
 import Foundation
+#if os(macOS)
 import SwiftRs
 
 @_cdecl("day9p1_rust_bridge")
@@ -20,3 +21,4 @@ public func day9p1RustBridge2(_ input: UnsafeMutableRawPointer, _ len: Int ) -> 
   let result = day9p1(input: input)
   return result
 }
+#endif

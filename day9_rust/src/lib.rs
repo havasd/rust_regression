@@ -31,6 +31,7 @@ fn parse_line_into_sequence_of_numbers(
     })
 }
 
+#[inline]
 fn predict_next_value(numbers: impl DoubleEndedIterator<Item = i64>) -> i64 {
     let mut sequence = numbers.rev().collect::<Vec<_>>();
 
@@ -43,6 +44,7 @@ fn predict_next_value(numbers: impl DoubleEndedIterator<Item = i64>) -> i64 {
     result
 }
 
+#[inline]
 fn generate_differences(sequence: Vec<i64>) -> Vec<i64> {
     let mut sequence = sequence.into_iter();
     if let Some(result) = sequence.next().map(|firstvalue| {

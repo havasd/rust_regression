@@ -6,3 +6,4 @@ RustDay9/
 generated/
 .build/
 Day9Rust/
+flamegraph.svg

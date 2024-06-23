@@ -191,10 +191,6 @@ dependencies = [
 [[package]]
 name = "day9_rust"
 version = "0.1.0"
-dependencies = [
- "swift-bridge",
- "swift-bridge-build",
-]
 
 [[package]]
 name = "divan"
@@ -218,7 +214,7 @@ checksum = "27540baf49be0d484d8f0130d7d8da3011c32a44d4fc873368154f1510e574a2"
 dependencies = [
  "proc-macro2",
  "quote",
- "syn 2.0.66",
+ "syn",
 ]
 
 [[package]]
@@ -236,12 +232,6 @@ dependencies = [
  "libc",
  "windows-sys 0.52.0",
 ]
-
-[[package]]
-name = "fastrand"
-version = "2.1.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9fc0510504f03c51ada170672ac806f1f105a88aa97a5281117e1ddc3368e51a"
 
 [[package]]
 name = "half"
@@ -485,7 +475,7 @@ checksum = "500cbc0ebeb6f46627f50f3f5811ccf6bf00643be300b4c3eabc0ef55dc5b5ba"
 dependencies = [
  "proc-macro2",
  "quote",
- "syn 2.0.66",
+ "syn",
 ]
 
 [[package]]
@@ -500,62 +490,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "swift-bridge"
-version = "0.1.55"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6180c668892926e0bc19d75a81b0ee2fdce3ab15ff062a61b3ce9b4d562eac1b"
-dependencies = [
- "swift-bridge-build",
- "swift-bridge-macro",
-]
-
-[[package]]
-name = "swift-bridge-build"
-version = "0.1.55"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7b8256d2d8c35795afeab117528f5e42b2706ca29b20f768929d458c7f245fdd"
-dependencies = [
- "proc-macro2",
- "swift-bridge-ir",
- "syn 1.0.109",
- "tempfile",
-]
-
-[[package]]
-name = "swift-bridge-ir"
-version = "0.1.55"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a28407ee88b57fac3e8c9314a0eefb1f63a3743cb0beef4b8d93189d5d8ce0f1"
-dependencies = [
- "proc-macro2",
- "quote",
- "syn 1.0.109",
-]
-
-[[package]]
-name = "swift-bridge-macro"
-version = "0.1.55"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e69ec9898b591cfcf473a584e98b54517400dcc67b0d3f8fdf2a099ce7971e3a"
-dependencies = [
- "proc-macro2",
- "quote",
- "swift-bridge-ir",
- "syn 1.0.109",
-]
-
-[[package]]
-name = "syn"
-version = "1.0.109"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "72b64191b275b66ffe2469e8af2c1cfe3bafa67b529ead792a6d0160888b4237"
-dependencies = [
- "proc-macro2",
- "quote",
- "unicode-ident",
-]
-
-[[package]]
 name = "syn"
 version = "2.0.66"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -564,18 +498,6 @@ dependencies = [
  "proc-macro2",
  "quote",
  "unicode-ident",
-]
-
-[[package]]
-name = "tempfile"
-version = "3.10.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "85b77fafb263dd9d05cbeac119526425676db3784113aa9295c88498cbf8bff1"
-dependencies = [
- "cfg-if",
- "fastrand",
- "rustix",
- "windows-sys 0.52.0",
 ]
 
 [[package]]
@@ -635,7 +557,7 @@ dependencies = [
  "once_cell",
  "proc-macro2",
  "quote",
- "syn 2.0.66",
+ "syn",
  "wasm-bindgen-shared",
 ]
 
@@ -657,7 +579,7 @@ checksum = "e94f17b526d0a461a191c78ea52bbce64071ed5c04c9ffe424dcb38f74171bb7"
 dependencies = [
  "proc-macro2",
  "quote",
- "syn 2.0.66",
+ "syn",
  "wasm-bindgen-backend",
  "wasm-bindgen-shared",
 ]

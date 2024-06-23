@@ -44,9 +44,7 @@ func predictNextValue(sequence: [Int64]) -> Int64 {
 
 func generateDifferences(sequence: [Int64]) -> [Int64] {
   let firstvalue = sequence.first!
-  let result = sequence[1..<sequence.count].scan(firstvalue) {
-    (previous, current) in
-    
+  let result = sequence[1..<sequence.count].scan(firstvalue) { (previous, current) in
     defer {
       previous = current
     }

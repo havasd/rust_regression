@@ -16,7 +16,7 @@ let package = Package(
       targets: ["Aoc2023Day9"]),
     .executable(
       name: "Aoc2023Day9Executable",
-      targets: ["Aoc2023Day9Executable"]),
+      targets: ["Aoc2023Day9Executable"])
   ],
 
   targets: [
@@ -31,6 +31,6 @@ let package = Package(
       name: "Aoc2023Day9Tests",
       dependencies: [
         "Aoc2023Day9"
-      ]),
+      ])
   ]
 )

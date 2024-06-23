@@ -1,57 +1,25 @@
-# Rust/Swift interop with SwiftRs/Swift-Bridge
+# Swift performance abysmal ?
 
-Using solutions of Advent of Code 2023 day 9, this rep gives an example of
-how to use SwiftRs to use Swift packages with Rust.
+This branch contains solutions for the Advent of Code 2023 puzzle of day 9 for both Rust and Swift. On this branch the solution are not linked together by SwiftRs and Swift-Bridge to simplify building and running the benchmarks.
 
-Benchmarks are discouraging for Swift though...
+Benchmarks are given for Rust with Criterion and Divan. Run them by
 
-## Caveats
-
-The swift part is included  on macOS only, as SwiftRs is not available on Linux.
-
-## Building the Swift package of rust functions
-### macOS
-
-As a pre-requisite you need the *swift-bridge-cli* commmand for cargo. This is installed by
+```bash
+cargo bench
 ```
-cargo install swift-bridge-cli
-```
-To build the package *DayRust9*, do this
 
-```
-cargo clean
-cargo build -p day9_rust --release
-swift-bridge-cli create-package --bridges-dir day9_rust/generated --name Day9Rust --out-dir Day9Rust --macos target/release/libday9_rust.a
-```
-Now you can build the Swift package in day9_swift and run its tests, which include the Rust functions.
+and for Swift with XCTest. Run them by
+
 ```
 cd day9_swift
-swift build -c release
-swift test
+swift test -c release
 ```
 
-The test output is more concise using *xcbeautify*. This is available from Homebrew
-```
-brew install xcbeautify
-```
-Run the tests with
-```
-swift test | xcbeautify
-```
+The results show that Swift is about 1000 times slower than Rust here, and I cannot get why (as runtimes do not differ really for both parts of the puzzle, only those for part1 are shown here):
 
-### Linux
+| Language | Criterion | Divan | XCTest |
+|----------|-----------|-------|--------|
+| Rust Part1    | 150 µs    | 110 µs|        |
+| Swift Part1   |           |       | 2 **ms**  |
 
-On Linux, swift-bridge isn't available, so the package in day9_swift can't import the rust functions.
-To build and run the tests of this package you need to create a dummy Day9Rust package 
-in the root directory:
-
-```
-mkdir Day9Rust
-cd Day9Rust
-swift package init --type library 
-```
-
-Then go to day9_swift, build and run the tests as usual in a swift package.
-
-You need Swift on Linux of course, Grab the 5.10 or newer tarball from swift.org,
-unpack it anywhere and put it's bin directory in your path.
+Why is the Swift code so slow and how can it be improved?

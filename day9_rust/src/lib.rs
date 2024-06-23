@@ -1,7 +1,5 @@
 use std::mem::replace;
 
-#[cfg(target_os="macos")]
-pub mod bridge;
 
 pub fn p1(input: &str) -> i64 {
     input

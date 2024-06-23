@@ -17,25 +17,3 @@ mod rust {
     }
 }
 
-#[cfg(target_os = "macos")]
-mod swift {
-    use day9::swift::{day9p1_rust_bridge, day9p2_rust_bridge};
-    use swift_rs::{self, SRString};
-    #[divan::bench]
-    fn part1() {
-        unsafe {
-            day9p1_rust_bridge(divan::black_box(SRString::from(include_str!(
-                "../input.txt",
-            ))));
-        }
-    }
-
-    #[divan::bench]
-    fn part2() {
-        unsafe {
-            day9p2_rust_bridge(divan::black_box(SRString::from(include_str!(
-                "../input.txt",
-            ))));
-        }
-    }
-}

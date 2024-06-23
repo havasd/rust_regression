@@ -23,11 +23,11 @@ public func day9p2(input: String) -> Int64 {
   return result
 }
 
-@inline(__always) func parseLineIntoSequenceOfNumbers(line: Substring) -> [Int64] {
+func parseLineIntoSequenceOfNumbers(line: Substring) -> [Int64] {
   return line.split(separator: " ").map { Int64($0)! }
 }
 
-@inline(__always) func predictNextValue(sequence: [Int64]) -> Int64 {
+func predictNextValue(sequence: [Int64]) -> Int64 {
   var result: Int64 = 0
   // This makes sequence mutable, but as we never write to it
   // but just replace it, copy-on-write should not be a problem.
@@ -42,7 +42,7 @@ public func day9p2(input: String) -> Int64 {
   return result
 }
 
-@inline(__always) func generateDifferences(sequence: [Int64]) -> [Int64] {
+func generateDifferences(sequence: [Int64]) -> [Int64] {
   let firstvalue = sequence.first!
   let result = sequence[1..<sequence.count].scan(firstvalue) {
     (previous, current) in

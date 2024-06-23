@@ -15,7 +15,7 @@ cd day9_swift
 swift test -c release
 ```
 
-The results show that Swift is about 1000 times slower than Rust here, and I cannot get why (as runtimes do not differ really for both parts of the puzzle, only those for part1 are shown here):
+The results show that Swift is about 20 times slower than Rust here, and I cannot get why (as runtimes do not differ really for both parts of the puzzle, only those for part1 are shown here):
 
 | Language | Criterion | Divan | XCTest |
 |----------|-----------|-------|--------|

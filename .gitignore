@@ -7,3 +7,4 @@ generated/
 .build/
 Day9Rust/
 flamegraph.svg
+.idea/

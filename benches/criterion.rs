@@ -42,12 +42,15 @@ use swift_rs::{self, SRString};
 
 #[cfg(target_os = "macos")]
 use day9::swift::{
-    day9p1_rust_bridge, day9p1_rust_bridge2, day9p2_rust_bridge,
+    day9p1_rust_bridge, day9p2_rust_bridge,
 };
 
 #[cfg(target_os = "macos")]
 fn bench_p1_swift(c: &mut Criterion) {
+    use std::time::Duration;
+
     let mut g = c.benchmark_group("criterion");
+    g.measurement_time(Duration::from_secs(7));
     g.bench_function("p1-swift", |b| {
         b.iter_batched(
             || {
@@ -65,7 +68,10 @@ fn bench_p1_swift(c: &mut Criterion) {
 
 #[cfg(target_os = "macos")]
 fn bench_p2_swift(c: &mut Criterion) {
+    use std::time::Duration;
+
     let mut g = c.benchmark_group("criterion");
+    g.measurement_time(Duration::from_secs(7));
     g.bench_function("p2-swift", |b| {
         b.iter_batched(
             || {
@@ -82,34 +88,12 @@ fn bench_p2_swift(c: &mut Criterion) {
 }
 
 #[cfg(target_os = "macos")]
-fn bench_p1_swift2(c: &mut Criterion) {
-    let mut g = c.benchmark_group("criterion");
-    g.bench_function("p1-swift2", |b| {
-        b.iter_batched(
-            || {
-                let mut f = File::open("input.txt").expect("can't open file");
-                let mut buf = String::new();
-                f.read_to_string(&mut buf).expect("can't read file");
-                buf
-            },
-            |f| unsafe {
-                let mut f = f;
-                day9p1_rust_bridge2(f.as_mut_ptr(), f.len() as i64)
-            },
-            BatchSize::SmallInput,
-        )
-    });
-    g.finish();
-}
-
-#[cfg(target_os = "macos")]
 criterion_group!(
     benches,
     bench_p1,
     bench_p2,
     bench_p1_swift,
     bench_p2_swift,
-    bench_p1_swift2,
 );
 
 #[cfg(not(target_os = "macos"))]

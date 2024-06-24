@@ -16,11 +16,11 @@ let package = Package(
       targets: ["Aoc2023Day9"]),
     .executable(
       name: "Aoc2023Day9Executable",
-      targets: ["Aoc2023Day9Executable"]),
+      targets: ["Aoc2023Day9Executable"])
   ],
   dependencies: [
     .package(url: "https://github.com/Brendonovich/swift-rs", from: "1.0.5"),
-    .package(name: "Day9Rust", path: "../Day9Rust"),
+    .package(name: "Day9Rust", path: "../Day9Rust")
   ],
   targets: [
     // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -37,7 +37,7 @@ let package = Package(
       name: "Aoc2023Day9Tests",
       dependencies: [
         "Aoc2023Day9",
-        .product(name: "Day9Rust",  package: "Day9Rust", condition: .when(platforms: [.macOS])),
-      ]),
+        .product(name: "Day9Rust", package: "Day9Rust", condition: .when(platforms: [.macOS]))
+      ])
   ]
 )

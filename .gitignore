@@ -7,3 +7,5 @@ generated/
 .build/
 Day9Rust/
 flamegraph.svg
+day9_swift/.swiftpm/xcode/xcshareddata/xcschemes/
+.idea

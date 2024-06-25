@@ -22,9 +22,9 @@ mod swift {
     use day9::swift::{day9p1_rust_bridge, day9p2_rust_bridge};
     use swift_rs::{self, SRString};
     pub fn call_swift(buf: &str) {
-        let result = unsafe { day9p1_rust_bridge(SRString::from(buf)) };
+        let result = unsafe { day9p1_rust_bridge(buf.as_ptr(), buf.len() as i64) };
         println!("{result}");
-        let result = unsafe { day9p2_rust_bridge(SRString::from(buf)) };
+        let result = unsafe { day9p2_rust_bridge(&SRString::from(buf)) };
         println!("{result}");
     }
     

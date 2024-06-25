@@ -57,9 +57,9 @@ fn bench_p1_swift(c: &mut Criterion) {
                 let mut f = File::open("input.txt").expect("can't open file");
                 let mut buf = String::new();
                 f.read_to_string(&mut buf).expect("can't read file");
-                SRString::from(buf.as_str())
+                buf
             },
-            |f| unsafe { day9p1_rust_bridge(f) },
+            |mut f| unsafe { day9p1_rust_bridge(f.as_mut_ptr(), f.len() as i64) },
             BatchSize::SmallInput,
         )
     });
@@ -80,7 +80,7 @@ fn bench_p2_swift(c: &mut Criterion) {
                 f.read_to_string(&mut buf).expect("can't read file");
                 SRString::from(buf.as_str())
             },
-            |f| unsafe { day9p2_rust_bridge(f) },
+            |f| unsafe { day9p2_rust_bridge(&f) },
             BatchSize::SmallInput,
         )
     });

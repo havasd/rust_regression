@@ -7,8 +7,6 @@ import XCTest
 
 final class Aoc2023Day9Tests: XCTestCase {
 
-
-
   func testDay9p1Measure() {
     let file = "../input.txt"
     let input = try? Data(
@@ -34,9 +32,8 @@ final class Aoc2023Day9Tests: XCTestCase {
 
   func testDay9p2Measure() {
     let file = "../input.txt"
-    let input = try? String(
-      contentsOfFile: file,
-      encoding: .utf8)
+    let input = try? Data(
+      contentsOf: URL(filePath: file))
     #if os(macOS)
       let options = XCTMeasureOptions()
       options.iterationCount = 100
@@ -91,7 +88,7 @@ final class Aoc2023Day9Tests: XCTestCase {
 
   static var allTests = [
     (
-      "testDay9Swift",  testDay9p2Sample,
+      "testDay9Swift",  
       testDay9p1Measure, testDay9p2Measure
     )
   ]

@@ -38,9 +38,6 @@ fn bench_p2(c: &mut Criterion) {
     g.finish()
 }
 #[cfg(target_os = "macos")]
-use swift_rs::{self, SRString};
-
-#[cfg(target_os = "macos")]
 use day9::swift::{
     day9p1_rust_bridge, day9p2_rust_bridge,
 };
@@ -78,9 +75,9 @@ fn bench_p2_swift(c: &mut Criterion) {
                 let mut f = File::open("input.txt").expect("can't open file");
                 let mut buf = String::new();
                 f.read_to_string(&mut buf).expect("can't read file");
-                SRString::from(buf.as_str())
+                buf            
             },
-            |f| unsafe { day9p2_rust_bridge(&f) },
+            |mut f| unsafe { day9p2_rust_bridge(f.as_mut_ptr(), f.len() as i64) },
             BatchSize::SmallInput,
         )
     });

@@ -1,6 +1,5 @@
 import Foundation
 #if os(macOS)
-import SwiftRs
 
 /// these are bridging functions to allow Rust to call Swift functions
 
@@ -11,8 +10,8 @@ public func day9p1RustBridge(_ input: UnsafeMutablePointer<UInt8>, _ len: UInt64
 }
 
 @_cdecl("day9p2_rust_bridge")
-public func day9p2RustBridge(_ input: SRString) -> Int64 {
-  let result = day9p2(input: input.toString())
+public func day9p2RustBridge(_ input: UnsafeMutablePointer<UInt8>, _ len: UInt64) -> Int64 {
+  let result = day9p2(input: Data(bytesNoCopy: input, count: Int(len) , deallocator: .none))
   return result
 }
 

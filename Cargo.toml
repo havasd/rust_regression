@@ -13,9 +13,6 @@ day9_rust = { path = "day9_rust"}
 criterion = "0.5.1"
 divan = "0"
 
-[target.'cfg(target_os = "macos")'.dependencies]
-swift-rs = {version = "1.0.6"}
-
 [target.'cfg(target_os = "macos")'.build-dependencies]
 swift-rs = { version = "1.0.6", features = ["build"]}
 

@@ -14,10 +14,10 @@ public func day9p1(input: Data) -> Int64 {
   return result
 }
 
-public func day9p2(input: String) -> Int64 {
+public func day9p2(input: Data) -> Int64 {
   var result: Int64 = 0
-  for line in input.split(separator: "\n") {
-    var sequence = line.split(separator: " ").map { Int64($0)! }
+  for line in input.split(separator: UInt8(ascii: "\n")) {
+    var sequence = line.split(separator: UInt8(ascii: " ")).map { Int64(String(data: $0, encoding: .utf8)!)! }
     sequence.reverse()
     while sequence.first(where: { $0 != 0 }) != nil {
       result += sequence.last!

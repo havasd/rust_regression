@@ -1,0 +1,8 @@
+[profile.release]
+# codegen-units = 1
+# opt-level = 3
+# lto = "thin"
+# debug and strip is needed because of a performance regression introduced in 1.79
+# https://github.com/rust-lang/rust/commit/3412f0174934778dd803081dc7c4b5864309350f#diff-deee82aaf9baf43ab05d939355f6249fdacf8959bc0e06c9574283453f838ee9R702
+# we use strip to keep the binary size on the same level
+debug = 1

@@ -6,13 +6,9 @@ edition = "2021"
 [dependencies]
 
 [dev-dependencies]
-criterion = "0"
-divan = "0"
+iai-callgrind = "0"
+
 
 [[bench]]
-name = "criterion"
-harness = false
-
-[[bench]]
-name = "divan"
+name = "iai_callgrind"
 harness = false
